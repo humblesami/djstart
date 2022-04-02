@@ -1,19 +1,20 @@
 {
     "env": "production",
     "local" : 0,
-    "site_name": "eng",
-    "site_path": "/var/www/eng92",
-    "site_url": "https://92newshd.tv",
-    "server_url":"https://admineng.92newshd.tv",
+    "SITE_NAME": "eng",
+    "SITE_PATH": "/var/www/eng92",
+    "SITE_URL": "https://92newshd.tv",
+    "SERVER_URL": "https://admineng.92newshd.tv",
+    "active_conn": "mysql",
     "postgresql": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "news92",
+        "NAME": "djs",
         "USER": "odoo",
         "PASSWORD": "123"
     },
     "mysql": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "eng",
+        "NAME": "djs",
         "USER": "root",
         "PASSWORD": "123"
     }

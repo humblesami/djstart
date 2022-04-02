@@ -6,4 +6,4 @@ Django==3.1.2
 #Pillow==9.0.1
 #pytz==2018.3
 #sudo apt-get install python3-dev default-libmysqlclient-dev
-#mysqlclient==2.0.3
+mysqlclient==2.0.3

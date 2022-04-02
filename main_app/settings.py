@@ -121,3 +121,62 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+import json
+from shutil import copyfile
+
+SITE_ID = 1
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+
+# SESSION_COOKIE_AGE = 3600
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+config_path = (str(BASE_DIR) + '/config.json')
+config_path = config_path.replace('\\/', '\\')
+config_path = config_path.replace('//', '/')
+if not os.path.exists(config_path):
+    temp_path = config_path.replace('config.json', 'example.config.json')
+    copyfile(temp_path, config_path)
+
+SITE_URL = ''
+DEBUG = False
+SERVER_URL = ''
+LOCALHOST = False
+DATABASE_ROUTERS = []
+with open(config_path, 'r') as site_config:
+    config_info = json.load(site_config)
+    env_type = config_info.get('env')
+    if config_info.get('local'):
+        DEBUG = True
+        LOCALHOST = True
+        ALLOWED_HOSTS = ['*']
+    if not DEBUG and env_type == 'dev':
+        DEBUG = True
+    else:
+        ALLOWED_HOSTS = config_info.get('ALLOWED_HOSTS')
+    
+    active_db = config_info.get('active_conn')
+    DATABASES['default'] = config_info[active_db]
+    
+    SITE_NAME = config_info.get('SITE_NAME')
+    SITE_URL = config_info.get('SITE_URL')
+    SITE_PATH = config_info.get('SITE_PATH')
+    SERVER_URL = config_info.get('SERVER_URL')
+
+PIP_APPS = []
+dj_apps = []
+INSTALLED_APPS = dj_apps + INSTALLED_APPS + PIP_APPS
+ALLOW_UNICODE_SLUGS = True

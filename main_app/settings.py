@@ -178,5 +178,6 @@ with open(config_path, 'r') as site_config:
 
 PIP_APPS = []
 dj_apps = []
-INSTALLED_APPS = dj_apps + INSTALLED_APPS + PIP_APPS
+feature_apps = ['inqalaab']
+INSTALLED_APPS = dj_apps + PIP_APPS + INSTALLED_APPS + feature_apps
 ALLOW_UNICODE_SLUGS = True

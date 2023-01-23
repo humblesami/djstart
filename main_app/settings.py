@@ -168,8 +168,9 @@ with open(config_path, 'r') as site_config:
     else:
         ALLOWED_HOSTS = config_info.get('ALLOWED_HOSTS')
     
-    active_db = config_info.get('active_conn')
-    DATABASES['default'] = config_info[active_db]
+    active_conn = config_info.get('active_conn')
+    if active_conn:
+        DATABASES['default'] = config_info[active_conn]
     
     SITE_NAME = config_info.get('SITE_NAME')
     SITE_URL = config_info.get('SITE_URL')

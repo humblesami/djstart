@@ -1,11 +1,7 @@
 {
     "env": "production",
     "local" : 0,
-    "SITE_NAME": "eng",
-    "SITE_PATH": "/var/www/eng92",
-    "SITE_URL": "https://92newshd.tv",
-    "SERVER_URL": "https://admineng.92newshd.tv",
-    "active_conn": "mysql",
+    "active_conn": "postgresql",
     "postgresql": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "djs",

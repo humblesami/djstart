@@ -1,0 +1,9 @@
+<h4>{{message}}</h4>
+<style>
+    a{
+        cursor: pointer;
+    }
+</style>
+{% for item in links %}
+<h4><a href="{{item.link}}">{{item.name}}</a></h4>
+{% endfor %}

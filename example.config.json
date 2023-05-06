@@ -1,6 +1,7 @@
 {
     "env": "production",
     "local" : 0,
+    "server_origin": "127.0.0.1",
     "active_conn": "postgresql",
     "postgresql": {
         "ENGINE": "django.db.backends.postgresql",

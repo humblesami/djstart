@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load i18n static %}
+<html lang="{{ LANGUAGE_CODE|default:'en-us' }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
+<head>
+    <title>{% block title %}Index Page{% endblock %}</title>
+    {% block core_files %}
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" href="{%  static 'website/favicon.ico' %}">
+    <link rel="stylesheet" media="print" onload="this.media='all'" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" media="print" onload="this.media='all'" href="{% static 'admin/css/responsive.css' %}">
+    <link rel="stylesheet" media="print" onload="this.media='all'" href="{% static 'website/css/site.css' %}">
+    <link rel="stylesheet" media="print" onload="this.media='all'" href="{% static 'website/css/admin.css' %}">
+
+    <script defer="defer" src="{% static 'website/jquery-2.2.4.js' %}"></script>
+    <script defer="defer" src="{% static 'website/js/utils.js' %}"></script>
+    {% endblock %}
+    {% block extrahead %}{% endblock %}
+</head>
+{% load i18n %}
+
+<body data-admin-utc-offset="{% now 'Z' %}">
+    {% block top_contents %}
+    {% endblock %}
+    {% block header %}
+    {% endblock %}
+    {% block page_contents %}
+        <h2>Index</h2>
+        {% if admin_url %}
+        <h2><a href="{{admin_url}}">Admin</a></h2>
+        {% endif %}
+    {% endblock %}
+    {% block footer %}
+    {% endblock %}
+</body>
+</html>

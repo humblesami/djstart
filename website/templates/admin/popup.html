@@ -1,0 +1,29 @@
+{% load i18n static %}
+<link rel="stylesheet" href="{% static 'website/css/popup.css' %}">
+<div id="single_popup" style="display:none">
+    <div class="d-flex-center middle">
+        <div class="model-container">
+            <div class="header">
+                <div class="top">
+                    <span class="close btn">X</span>
+                </div>
+                <div class="title">
+                    {% block title %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="body">
+                {% block body %}
+                {% endblock %}
+            </div>
+            <div class="footer">
+                <button class="btn btn-primary submit">Submit</button>
+                <button class="close btn btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'website/js/popup.js' %}"></script>
+    {% block footer %}
+    {% endblock %}
+    {% csrf_token %}
+</div>

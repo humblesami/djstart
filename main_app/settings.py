@@ -101,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
+# https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -109,33 +109,26 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+SITE_ID = 1
 import os
 import json
 from shutil import copyfile
-
-SITE_ID = 1
-MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
-
 # SESSION_COOKIE_AGE = 3600
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -148,13 +141,15 @@ config_path = (str(BASE_DIR) + '/config.json')
 config_path = config_path.replace('\\/', '\\')
 config_path = config_path.replace('//', '/')
 if not os.path.exists(config_path):
-    temp_path = config_path.replace('config.json', 'example.config.json')
+    temp_path = config_path.replace('config.json', 'install/example.config.json')
     copyfile(temp_path, config_path)
 
-SITE_URL = ''
 DEBUG = False
-SERVER_URL = ''
 LOCALHOST = False
+RUN_PORT = 8000
+SITE_URL = ''
+URL_PREFIX = ''
+PATH_PREFIX = ''
 DATABASE_ROUTERS = []
 with open(config_path, 'r') as site_config:
     config_info = json.load(site_config)
@@ -162,23 +157,49 @@ with open(config_path, 'r') as site_config:
     if config_info.get('local'):
         DEBUG = True
         LOCALHOST = True
-        ALLOWED_HOSTS = ['*']
-    if not DEBUG and env_type == 'dev':
+    if env_type == 'dev':
         DEBUG = True
-    else:
-        ALLOWED_HOSTS = config_info.get('ALLOWED_HOSTS')
-    
+    ALLOWED_HOSTS = config_info.get('host_names')
+
     active_conn = config_info.get('active_conn')
     if active_conn:
         DATABASES['default'] = config_info[active_conn]
-    
-    SITE_NAME = config_info.get('SITE_NAME')
-    SITE_URL = config_info.get('SITE_URL')
-    SITE_PATH = config_info.get('SITE_PATH')
-    SERVER_URL = config_info.get('SERVER_URL')
+    if config_info.get('port'):
+        RUN_PORT = config_info.get('port')
+    conf_site = config_info['server_origin']
+    if config_info.get('path_prefix'):
+        PATH_PREFIX = config_info['path_prefix']
+        conf_site = conf_site + '/' + PATH_PREFIX
+    SITE_URL = conf_site
 
-PIP_APPS = []
-dj_apps = []
-feature_apps = ['inqalaab']
-INSTALLED_APPS = dj_apps + PIP_APPS + INSTALLED_APPS + feature_apps
+
+PIP_APPS = [
+    "rest_framework", "rest_framework.authtoken",
+    "model_clone", "admin_image_preview", "form_navigation"
+]
+after_apps = []
+INSTALLED_APPS = PIP_APPS + ['website'] + INSTALLED_APPS + after_apps
 ALLOW_UNICODE_SLUGS = True
+MIDDLEWARE = ['website.middleware.General'] + MIDDLEWARE
+
+
+slashed_path = ''
+
+if PATH_PREFIX:
+    slashed_path = '/' + PATH_PREFIX
+if not slashed_path.endswith('/'):
+        slashed_path += '/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+
+MEDIA_URL = slashed_path + 'media/'
+STATIC_URL = slashed_path + 'static/'
+base_url = SITE_URL
+if base_url.endswith('/'):
+    base_url = base_url[1:]
+SITE__BASE_URL = base_url + slashed_path
+URL_PREFIX = slashed_path
+APPEND_SLASH = True
+
+LOGIN_URL = slashed_path + 'admin/login/'

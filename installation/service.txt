@@ -1,0 +1,42 @@
+nano /etc/systemd/system/bl.service
+systemctl --type=service
+sudo systemctl daemon-reload
+sudo systemctl enable dep
+sudo systemctl start dep
+sudo systemctl status dep
+
+
+[Unit]
+Description=Odoo14
+Requires=postgresql-10.service
+After=network.target postgresql-10.service
+[Service]
+Type=simple
+SyslogIdentifier=odoo14
+PermissionsStartOnly=true
+User=odoo
+Group=odoo
+ExecStart=/home2/h2xv1u3cc0aj/pyenv/o14/bin/python3 /home2/h2xv1u3cc0aj/odoo-14/bin.py -c /home2/h2xv1u3cc0aj/odoo-14/config.conf
+StandardOutput=journal+console
+[Install]
+WantedBy=multi-user.target
+
+
+
+----------- php -----------------
+[Unit]
+Description=balochistan times
+#Requires=mysql.service
+#After=network.target mysql.service
+[Service]
+Type=simple
+SyslogIdentifier=bl
+PermissionsStartOnly=true
+User=h2xv1u3cc0aj
+Group=h2xv1u3cc0aj
+WorkingDirectory=/home2/h2xv1u3cc0aj/blsite
+ExecStart=/usr/local/bin/php -S 127.0.0.1:8002
+StandardOutput=journal+console
+[Install]
+WantedBy=multi-user.target
+-------------------------------

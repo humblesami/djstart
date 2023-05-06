@@ -1,0 +1,3 @@
+sudo apt install zip unzip curl wget nodejs npm postgresql
+
+sudo apt install python3.6-venv

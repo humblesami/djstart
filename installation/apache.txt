@@ -1,0 +1,67 @@
+
+<VirtualHost *:80 *:443>
+    ServerName balochistantimes.pk
+    ServerAlias www.balochistantimes.pk
+    ErrorLog /var/log/apache2/bl_error.log
+
+    ProxyPreserveHost On
+
+    ProxyPass /epaper http://0.0.0.0:8011/
+    ProxyPassReverse /epaper http://0.0.0.0:8011/
+
+    DocumentRoot /home2/h2xv1u3cc0aj/epaper
+    Alias /paper1/static /home2/h2xv1u3cc0aj/epaper/static
+    <Directory /home2/h2xv1u3cc0aj/epaper/static>
+        Require all granted
+    </Directory>
+
+    Alias /paper1/media /home2/h2xv1u3cc0aj/epaper/media
+    <Directory /home2/h2xv1u3cc0aj/epaper/media>
+        Require all granted
+    </Directory>
+
+    ProxyPass /paper1 http://127.0.0.1:8014/paper1
+    ProxyPassReverse /paper1 http://127.0.0.1:8014/paper1
+
+    ProxyPass / http://0.0.0.0:8069/
+    ProxyPassReverse / http://0.0.0.0:8069/
+
+    Include /etc/letsencrypt/options-ssl-apache.conf
+    SSLCertificateFile /etc/letsencrypt/live/bt.92newshd.tv/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/bt.92newshd.tv/privkey.pem
+</VirtualHost>
+
+
+<VirtualHost 172.26.9.156:443>
+    ServerName balochistantimes.pk
+    ServerAlias mail.balochistantimes.pk www.balochistantimes.pk webdisk.balochistantimes.pk cpcontacts.balochistantimes.pk cpanel.balochistantimes.pk cpcalendars.baloch$
+    ErrorLog /var/log/apache2/bl_error.log
+
+    ProxyPreserveHost On
+
+    DocumentRoot /home2/h2xv1u3cc0aj/epaper
+    Alias /epaper/static /home2/h2xv1u3cc0aj/epaper/static
+    <Directory /home2/h2xv1u3cc0aj/epaper/static>
+        Require all granted
+    </Directory>
+
+    Alias /epaper/media /home2/h2xv1u3cc0aj/epaper/media
+    <Directory /home2/h2xv1u3cc0aj/epaper/media>
+        Require all granted
+    </Directory>
+
+    ProxyPass /epaper http://127.0.0.1:8014/epaper
+    ProxyPassReverse /epaper http://127.0.0.1:8014/epaper
+
+    ProxyPass / http://0.0.0.0:8069/
+    ProxyPassReverse / http://0.0.0.0:8069/
+
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+    <IfModule ssl_module>
+        SSLEngine on
+        SSLCertificateFile /var/cpanel/ssl/apache_tls/balochistantimes.pk/combined
+    </IfModule>
+</VirtualHost>

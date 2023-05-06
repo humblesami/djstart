@@ -1,0 +1,68 @@
+CREATE DATABASE epaperdj1 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON epaperdj.* TO 'btepaper'@'localhost';
+
+select max(page_id) mpid from
+(
+    select p.issue_id, p.station_id, p.position, p.page_id from pages p
+    join
+    (
+    select issue_id, station_id, position from pages GROUP by issue_id, station_id, position HAVING count(*)>1
+    ) t1
+    on t1.issue_id = p.issue_id and t1.station_id=p.station_id and t1.position = p.position
+) p GROUP by p.issue_id, p.station_id, p.position;
+
+DELETE p3.* from pages p3 join
+(
+
+    select max(page_id) mpid from
+    (
+        select p.issue_id, p.station_id, p.position, p.page_id from pages p
+        join
+        (
+        select issue_id, station_id, position from pages GROUP by issue_id, station_id, position HAVING count(*)>1
+        ) t1
+        on t1.issue_id = p.issue_id and t1.station_id=p.station_id and t1.position = p.position
+    ) p GROUP by p.issue_id, p.station_id, p.position
+) t2 on t2.mpid=p3.page_id;
+
+select p.issue_id, p.station_id, p.position, p.page_id from pages p
+join
+(
+select issue_id, station_id, position from pages GROUP by issue_id, station_id, position HAVING count(*)>1
+) t1
+on t1.issue_id = p.issue_id and t1.station_id=p.station_id and t1.position = p.position
+order by p.issue_id, p.station_id, p.position;
+
+
+
+UPDATE pages p
+join issues i on p.issue_id=i.issue_id
+set p.page_full=concat('issues/', i.issue_date , '/', p.page_full)
+WHERE p.page_full not like 'issues/%';
+
+
+UPDATE pages p
+join issues i on p.issue_id=i.issue_id
+set p.published=1 where i.publish_status=1 and p.Published=0
+
+
+UPDATE pages p
+join issues i on p.issue_id=i.issue_id
+set p.page_thumb=concat('issues/', i.issue_date , '/', p.page_thumb)
+WHERE p.page_thumb not like 'issues/%';
+
+UPDATE pages set page_map=replace(page_map, '&lt;', '<');
+UPDATE pages set page_map=replace(page_map, '&gt;', '>');
+UPDATE pages set page_map=replace(page_map, '&quot;', '"');
+
+select TABLE_NAME, TABLE_COLLATION from information_schema.tables where TABLE_schema='epaperdj'
+and TABLE_COLLATION != 'utf8mb4_unicode_ci' and TABLE_collation is not null;
+
+select TABLE_NAME,COLUMN_NAME,CHARACTER_SET_NAME, COLLATION_NAME from information_schema.columns where TABLE_schema='epaperdj'
+and
+(
+    (COLLATION_NAME!='utf8mb4_unicode_ci' and COLLATION_NAME is not null)
+    or (CHARACTER_SET_NAME!='utf8mb4' and CHARACTER_SET_NAME is not null)
+);
+
+ALTER TABLE `station` CHANGE `station_name` `station_name` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;

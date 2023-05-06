@@ -1,0 +1,6 @@
+sudo apt install postgresql postgresql-contrib
+sudo apt install postgresql postgresql-contrib
+sudo nano /etc/postgresql/12/main/pg_hba.conf
+local   all             all                                     peer
+local   all             all                                     md5
+sudo systemctl restart postgresql

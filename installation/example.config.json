@@ -1,0 +1,17 @@
+{
+    "env": "prod",
+    "local" : 0,
+    "port": 89,
+    "active_conn": "mysql",
+    "venv_bin_path": "/home2/h2xv1u3cc0aj/pyenv/epaper/bin",
+    "host_names": ["127.0.0.1", "0.0.0.0", "balochistantimes.pk"],
+    "server_origin": "http://127.0.0.1:8014",
+    "path_prefix": "epaper1",
+    "source_db": "aa",
+    "mysql": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "aa",
+        "USER": "aa",
+        "PASSWORD": "123"
+    }
+}

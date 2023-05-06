@@ -159,7 +159,7 @@ with open(config_path, 'r') as site_config:
         LOCALHOST = True
     if env_type == 'dev':
         DEBUG = True
-    ALLOWED_HOSTS = config_info.get('host_names')
+    ALLOWED_HOSTS = config_info['host_names']
 
     active_conn = config_info.get('active_conn')
     if active_conn:

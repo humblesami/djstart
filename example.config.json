@@ -3,6 +3,7 @@
     "local" : 0,
     "server_origin": "127.0.0.1",
     "active_conn": "postgresql",
+    "host_names": ["localhost", "127.0.0.1"],
     "postgresql": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "djs",

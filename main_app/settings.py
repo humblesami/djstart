@@ -141,8 +141,14 @@ config_path = (str(BASE_DIR) + '/config.json')
 config_path = config_path.replace('\\/', '\\')
 config_path = config_path.replace('//', '/')
 if not os.path.exists(config_path):
-    temp_path = config_path.replace('config.json', 'install/example.config.json')
+    temp_path = config_path.replace('config.json', 'example.config.json')
+    if not os.path.exists(temp_path):
+        temp_path = config_path.replace('config.json', 'install/example.config.json')
+    if not os.path.exists(temp_path):
+        temp_path = config_path.replace('config.json', 'installation/example.config.json')
     copyfile(temp_path, config_path)
+
+CONF_PATH = config_path
 
 DEBUG = False
 LOCALHOST = False

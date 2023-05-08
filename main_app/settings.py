@@ -154,6 +154,8 @@ DEBUG = False
 LOCALHOST = False
 RUN_PORT = 0
 SITE_URL = ''
+CACHE_AGE = 0
+STALE_TIME = 0
 URL_PREFIX = ''
 PATH_PREFIX = ''
 DATABASE_ROUTERS = []
@@ -173,6 +175,10 @@ with open(config_path, 'r') as site_config:
     if config_info.get('port'):
         RUN_PORT = config_info.get('port')
     conf_site = config_info['server_origin']
+    if config_info.get('cache'):
+        cache_attrs = config_info.get('cache')
+        CACHE_AGE = cache_attrs['age']
+        STALE_TIME = cache_attrs.get('stale') or 0
     if config_info.get('path_prefix'):
         PATH_PREFIX = config_info['path_prefix']
         conf_site = conf_site + '/' + PATH_PREFIX
@@ -209,3 +215,4 @@ URL_PREFIX = slashed_path
 APPEND_SLASH = True
 
 LOGIN_URL = slashed_path + 'admin/login/'
+

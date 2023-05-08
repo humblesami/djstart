@@ -66,19 +66,17 @@ class General(MiddlewareMixin):
             response.status_code = err_code
             return response
 
-        if not settings.DEBUG:
-            return response
-        cache_age = (60 * 3)
-        stale_time = (60 * 60 * 24)
-        try:
-            cache_age = settings.CACHE_AGE
-            stale_time = settings.STALE_TIME
-        except:
-            pass
-        host_name = request.headers['Host']
-        if not (host_name.startswith('127.0.0.1') or host_name.startswith('localhost')):
-            cache = f'public, max-age={cache_age}, stale-while-revalidate={stale_time},must-revalidate'
-            response['Cache-Control'] = cache
+        if settings.CACHE_AGE:
+            try:
+                cache_age = settings.CACHE_AGE
+                stale_time = settings.STALE_TIME
+                staled = f',stale-while-revalidate={stale_time}'
+                host_name = request.headers['Host']
+                if not (host_name.startswith('127.0.0.1') or host_name.startswith('localhost')):
+                    cache = f'public, max-age={cache_age}{staled},must-revalidate'
+                    response['Cache-Control'] = cache
+            except:
+                pass
         return response
 
     def process_exception(self, request, exception):

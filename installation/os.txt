@@ -1,3 +1,11 @@
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.6
+sudo apt install python3.6-venv
+
 sudo apt install zip unzip curl wget nodejs npm postgresql
 
-sudo apt install python3.6-venv
+pip freeze | xargs pip uninstall -y
+
+sudo apt install python3-pip
+python -m venv /path

@@ -1,8 +1,0 @@
-pip freeze | xargs pip uninstall -y
-
-sudo apt install python3-pip
-sudo apt-get install python3.6-venv
-
-sudo apt install python3.6-venv
-python -m venv /path
-

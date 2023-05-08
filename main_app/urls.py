@@ -10,11 +10,13 @@ def define_urls():
     urls_prefix = settings.PATH_PREFIX or ''
     if urls_prefix:
         urls_prefix += '/'
-    media_root = {'document_root': settings.MEDIA_ROOT}
-    media_urls = [re_path(r'^' + urls_prefix + 'media/(?P<path>.*)$', serve, media_root)]
-
-    static_root = {'document_root': settings.STATIC_ROOT}
-    static_urls = [re_path(r'^' + urls_prefix + 'static/(?P<path>.*)$', serve, static_root)]
+    media_urls = []
+    static_urls = []
+    if settings.DEBUG:
+        media_root = {'document_root': settings.MEDIA_ROOT}
+        static_root = {'document_root': settings.STATIC_ROOT}
+        media_urls = [re_path(r'^' + urls_prefix + 'media/(?P<path>.*)$', serve, media_root)]
+        static_urls = [re_path(r'^' + urls_prefix + 'static/(?P<path>.*)$', serve, static_root)]
     
     fav_path = RedirectView.as_view(url=f'{STATIC_URL}website/favicon.ico')
     favicon_url = [re_path(r'^' + urls_prefix + 'favicon.ico', fav_path)]

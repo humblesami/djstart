@@ -1,0 +1,35 @@
+server {
+    listen 8002;
+    listen [::]:8002;
+    location /admin/ {
+        return https://$host:8003$request_uri;
+    }
+    location /static/ {
+        root /home/ubuntu/www/djstart;
+    }
+    location /media/ {
+        root /home/ubuntu/www/media;
+    }
+    location / {
+        proxy_pass          http://localhost:8000;
+        proxy_set_header    Host $host;
+        #proxy_set_header    X-Forwarded-Proto $scheme;
+    }
+}
+server {
+    listen 8003 ssl;
+    listen [::]:8003 ssl;
+    ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned.key;
+    location /static/ {
+        root /home/ubuntu/www/djstart;
+    }
+    location /media/ {
+        root /home/ubuntu/www/media;
+    }
+    location / {
+        proxy_pass          http://localhost:8000;
+        proxy_set_header    Host $host;
+        #proxy_set_header    X-Forwarded-Proto $scheme;
+    }
+}

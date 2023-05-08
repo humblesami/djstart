@@ -1,4 +1,5 @@
 server {
+    #server_name (sub)domain;
     listen 8002;
     listen [::]:8002;
     location /admin/ {
@@ -8,15 +9,16 @@ server {
         root /home/ubuntu/www/djstart;
     }
     location /media/ {
-        root /home/ubuntu/www/media;
+        root /home/ubuntu/www/djstart;
     }
     location / {
-        proxy_pass          http://localhost:8000;
+        proxy_pass          http://localhost:7002;
         proxy_set_header    Host $host;
         #proxy_set_header    X-Forwarded-Proto $scheme;
     }
 }
 server {
+    #server_name (sub)domain;
     listen 8003 ssl;
     listen [::]:8003 ssl;
     ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
@@ -25,10 +27,10 @@ server {
         root /home/ubuntu/www/djstart;
     }
     location /media/ {
-        root /home/ubuntu/www/media;
+        root /home/ubuntu/www/djstart;
     }
     location / {
-        proxy_pass          http://localhost:8000;
+        proxy_pass          http://localhost:7002;
         proxy_set_header    Host $host;
         #proxy_set_header    X-Forwarded-Proto $scheme;
     }

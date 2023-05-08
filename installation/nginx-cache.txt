@@ -17,7 +17,7 @@ server {
         proxy_cache my_cache;
         access_log off;
         expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=846000, must-revalidate";
+        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
         proxy_cache_revalidate on;
         proxy_cache_lock on;
@@ -28,7 +28,7 @@ server {
         proxy_cache my_cache;
         access_log off;
         expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=846000, must-revalidate";
+        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
         proxy_cache_revalidate on;
         proxy_cache_lock on;
@@ -41,7 +41,7 @@ server {
         proxy_cache my_cache;
         proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
         expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=846000, must-revalidate";
+        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
         proxy_cache_revalidate on;
         proxy_cache_lock on;
@@ -59,7 +59,7 @@ server {
         proxy_cache my_cache;
         access_log off;
         expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=846000, must-revalidate";
+        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
         proxy_cache_revalidate on;
         proxy_cache_lock on;
@@ -70,7 +70,7 @@ server {
         proxy_cache my_cache;
         access_log off;
         expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=846000, must-revalidate";
+        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
         proxy_cache_revalidate on;
         proxy_cache_lock on;
@@ -83,7 +83,7 @@ server {
         proxy_cache my_cache;
         proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
         expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=846000, must-revalidate";
+        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
         proxy_cache_revalidate on;
         proxy_cache_lock on;

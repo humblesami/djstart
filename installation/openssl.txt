@@ -1,0 +1,24 @@
+1.
+sudo apt update
+sudo apt install openssl nginx
+
+2.
+sudo mkdir /etc/nginx/ssl
+
+3.
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout /etc/nginx/ssl/nginx-selfsigned.key \
+-out /etc/nginx/ssl/nginx-selfsigned.crt
+
+4.
+sudo nano/etc/nginx/mysite.conf
+
+server {
+    listen 8003 ssl;
+    listen [::]:8003 ssl;
+    ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned.key;
+}
+
+5.
+sudo systemctl restart nginx

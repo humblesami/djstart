@@ -152,7 +152,7 @@ CONF_PATH = config_path
 
 DEBUG = False
 LOCALHOST = False
-RUN_PORT = 8000
+RUN_PORT = 0
 SITE_URL = ''
 URL_PREFIX = ''
 PATH_PREFIX = ''
@@ -176,7 +176,7 @@ with open(config_path, 'r') as site_config:
     if config_info.get('path_prefix'):
         PATH_PREFIX = config_info['path_prefix']
         conf_site = conf_site + '/' + PATH_PREFIX
-    SITE_URL = conf_site
+    SITE_URL = conf_site + ('f:{RUN_PORT}' if RUN_PORT else '')
 
 
 PIP_APPS = [

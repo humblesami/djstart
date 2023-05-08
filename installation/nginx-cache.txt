@@ -1,8 +1,4 @@
-proxy_cache_path /home/ubuntu/www/djstart/server_cache
-levels=1:2
-keys_zone=my_cache:2M
-max_size=10g
-use_temp_path=off;
+proxy_cache_path /home/ubuntu/www/djstart/server_cache levels=1:2 keys_zone=my_cache:2M max_size=10g;
 
 server {
     #server_name (sub)domain;
@@ -16,10 +12,8 @@ server {
 
         proxy_cache my_cache;
         access_log off;
-        expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
+        add_header Cache-Control "public, max-age=2592000, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
-        proxy_cache_revalidate on;
         proxy_cache_lock on;
     }
     location /media/ {
@@ -27,10 +21,8 @@ server {
 
         proxy_cache my_cache;
         access_log off;
-        expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
+        add_header Cache-Control "public, max-age=2592000, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
-        proxy_cache_revalidate on;
         proxy_cache_lock on;
     }
     location / {
@@ -40,10 +32,8 @@ server {
 
         proxy_cache my_cache;
         proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-        expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
+        add_header Cache-Control "public, max-age=2592000, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
-        proxy_cache_revalidate on;
         proxy_cache_lock on;
     }
 }
@@ -58,10 +48,8 @@ server {
 
         proxy_cache my_cache;
         access_log off;
-        expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
+        add_header Cache-Control "public, max-age=2592000, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
-        proxy_cache_revalidate on;
         proxy_cache_lock on;
     }
     location /media/ {
@@ -69,10 +57,8 @@ server {
 
         proxy_cache my_cache;
         access_log off;
-        expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
+        add_header Cache-Control "public, max-age=2592000, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
-        proxy_cache_revalidate on;
         proxy_cache_lock on;
     }
     location / {
@@ -82,10 +68,8 @@ server {
 
         proxy_cache my_cache;
         proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-        expires 1M;
-        add_header Cache-Control "public, stale-while-revalidate=200000, must-revalidate";
+        add_header Cache-Control "public, max-age=2592000, stale-while-revalidate=200000, must-revalidate";
         proxy_cache_background_update on;
-        proxy_cache_revalidate on;
         proxy_cache_lock on;
     }
 }

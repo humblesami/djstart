@@ -1,24 +1,33 @@
-1.
 sudo apt update
 sudo apt -y install openssl nginx
+--------------------------------------------
+#sudo nano /home/ubuntu/ssl/sam_ssl.conf
+--------------------------------------------
+[req]
+distinguished_name     = req_distinguished_name
 
-2.
-sudo mkdir /etc/nginx/ssl
+[req_distinguished_name]
+countryName            = PK
+stateOrProvinceName    = Punjab
+localityName           = Lahore
+organizationName       = 92news
+organizationalUnitName = Creative
+commonName             = Sami
+emailAddress           = samiakram@live.com
+countryName_default             = PK
+stateOrProvinceName_default     = Punjab
+localityName_default            = Lahore
+organizationName_default        = 92news
+organizationalUnitName_default  = Creative
+commonName_default		        = Sami
+emailAddress_default            = samiakram@live.com
+------------------------------------------------------------
+#sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/self-signed.key -out /etc/nginx/ssl/self-signed.crt -config /home/ubuntu/ssl/sam_ssl.conf
+sudo openssl genpkey -algorithm RSA -out /etc/nginx/ssl/self-signed.key
+sudo openssl req -new -key /etc/nginx/ssl/self-signed.key -out /etc/nginx/ssl/self-signed-csr.pem -config /home/ubuntu/ssl/sam_ssl.conf
+sudo openssl x509 -req -days 365 -in /etc/nginx/ssl/self-signed-csr.pem -signkey /etc/nginx/ssl/self-signed.key -out /etc/nginx/ssl/self-signed.crt
 
-3.
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
--keyout /etc/nginx/ssl/nginx-selfsigned.key \
--out /etc/nginx/ssl/nginx-selfsigned.crt
+-----------------------------------------------------
 
-4.
-sudo nano/etc/nginx/mysite.conf
-
-server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
-    ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned.key;
-}
-
-5.
+sudo nginx -t
 sudo systemctl restart nginx

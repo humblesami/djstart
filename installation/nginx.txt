@@ -1,37 +1,29 @@
+proxy_cache_path /home/ubuntu/www/cache/site1 levels=1:2 keys_zone=site1:2M max_size=10g;
 server {
-    #server_name (sub)domain;
-    listen 8002;
-    listen [::]:8002;
-    location /admin/ {
-        return https://$host:8003$request_uri;
-    }
-    location /static/ {
-        root /home/ubuntu/www/djstart;
-    }
-    location /media/ {
-        root /home/ubuntu/www/djstart;
-    }
+    server_name 65.0.74.234.nip.io;
+    listen 80; listen [::]:80;
+
+    location /static/ { root /home/ubuntu/www/sites/start_dj;}
+    location /media/ {root /home/ubuntu/www/sites/start_dj;}
     location / {
         proxy_pass          http://localhost:7002;
-        proxy_set_header    Host $host;
-        #proxy_set_header    X-Forwarded-Proto $scheme;
+        proxy_set_header    Host 65.0.74.234;
     }
-}
-server {
-    #server_name (sub)domain;
-    listen 8003 ssl;
-    listen [::]:8003 ssl;
-    ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
-    ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned.key;
-    location /static/ {
-        root /home/ubuntu/www/djstart;
-    }
-    location /media/ {
-        root /home/ubuntu/www/djstart;
-    }
-    location / {
-        proxy_pass          http://localhost:7002;
-        proxy_set_header    Host $host;
-        #proxy_set_header    X-Forwarded-Proto $scheme;
-    }
+
+    access_log off;
+    error_log  /home/ubuntu/www/logs/site1/error error;
+    error_log  /home/ubuntu/www/logs/site1/crit crit;
+    error_log  /home/ubuntu/www/logs/site1/warn error;
+    error_log  /home/ubuntu/www/logs/site1/alert alert;
+    error_log  /home/ubuntu/www/logs/site1/emerg emerg;
+
+    proxy_cache site1;
+    proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+    add_header Cache-Control "public, max-age=2592000, stale-while-revalidate=200000, must-revalidate";
+    proxy_cache_background_update on;
+    proxy_cache_lock on;
+
+     listen 443; listen [::]:443;
+     ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
+     ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned.key;
 }

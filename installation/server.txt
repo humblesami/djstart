@@ -1,0 +1,36 @@
+sudo apt update
+sudo apt -y upgrade
+sudo apt -y install python3-pip
+pip install --upgrade pip
+sudo apt -y install python3-venv
+
+sudo apt -y install nginx
+sudo ufw allow 22/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 8001/tcp
+sudo ufw enable
+
+mkdir www
+cd www
+mkdir logs cache pyenvs sites
+mkdir ~/www/logs/site1
+
+include postgresql.txt
+include django.txt
+
+sudo nano /etc/nginx/nginx.conf
+uncomment
+#server_names_hash_bucket_size 64;
+make it
+server_names_hash_bucket_size 128;
+sudo systemctl reload nginx.service
+
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.6
+sudo apt install python3.6-venv
+pip freeze | xargs pip uninstall -y
+python -m venv /path
+
+

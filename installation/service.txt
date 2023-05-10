@@ -17,11 +17,10 @@ SyslogIdentifier=djs
 PermissionsStartOnly=true
 User=ubuntu
 Group=ubuntu
-ExecStart=/home/ubuntu/www/pyenvs/dj2.2/bin/python3 /home/ubuntu/www/djstart/manage.py runserver 0.0.0.0:7002
+ExecStart=/home/ubuntu/www/pyenvs/start_dj/bin/python3 /home/ubuntu/www/sites/start_dj/manage.py runserver 0.0.0.0:7002
 StandardOutput=journal+console
 [Install]
 WantedBy=multi-user.target
-
 
 
 ----------- php -----------------

@@ -1,0 +1,5 @@
+sudo nano /etc/nginx/sites-enabled/site1.conf
+sudo nginx -t
+sudo systemctl reload nginx.service
+sudo mv /etc/nginx/sites-enabled/site1.conf /etc/nginx/sites-available/
+sudo mv /etc/nginx/sites-available/site1.conf /etc/nginx/sites-enabled/

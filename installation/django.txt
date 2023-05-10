@@ -1,0 +1,14 @@
+cd ~/www/sites
+
+git clone https://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@github.com/humblesami/djstart.git
+mv djstart/ start_dj
+cd start_dj
+cp example.config.json config.json
+nano config.json
+python3 -m venv ../../pyenvs/start_dj
+source ../../pyenvs/start_dj/bin/activate
+pip install -r requirements.txt
+pip install --upgrade pip
+python manage.py reset -hard
+python manage.py collectstatic
+python manage.py runserver 0.0.0.0:7002

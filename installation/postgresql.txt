@@ -1,11 +1,11 @@
-sudo apt install postgresql postgresql-contrib
+sudo apt -y install postgresql postgresql-contrib
 sudo nano /etc/postgresql/12/main/pg_hba.conf
 local   all             all                                     peer
 local   all             all                                     md5
 sudo systemctl restart postgresql
 
 sudo -u postgres psql
-CREATE USER obool WITH PASSWORD 'pass';
+CREATE USER obool WITH PASSWORD 'hdGb^n2s%,oG7';
 ALTER ROLE obool SET client_encoding TO 'utf8';
 ALTER ROLE obool SET timezone TO 'UTC';
 ALTER USER obool WITH SUPERUSER;

@@ -1,0 +1,11 @@
+sudo apt -y install nginx certbot python3-certbot-nginx
+
+sudo nano /etc/nginx/sites-available/site1.conf
+server_name ec2-65-0-74-35.ap-south-1.compute.amazonaws.com www.ec2-65-0-74-35.ap-south-1.compute.amazonaws.com;
+
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d 65.0.74.234.nip.io
+sudo systemctl status certbot.timer
+sudo certbot renew --dry-run

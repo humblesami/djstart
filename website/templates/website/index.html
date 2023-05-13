@@ -28,8 +28,11 @@
         {% if admin_url %}
         <h2><a href="{{admin_url}}">Admin</a></h2>
         {% endif %}
+
+        {% if is_https %}
         {% include "website/fb.html" %}
         {% include "website/google.html" %}
+        {% endif %}
     {% endblock %}
     {% block footer %}
     {% endblock %}

@@ -1,6 +1,5 @@
 <div class="fb-auth-container">
     <script>
-
         function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
             console.log('statusChangeCallback');
             console.log(response);                   // The current login status of the person.
@@ -12,13 +11,11 @@
             }
         }
 
-
         function checkLoginState() {               // Called when a person is finished with the Login Button.
             FB.getLoginStatus(function (response) {   // See the onlogin handler
                 statusChangeCallback(response);
             });
         }
-
 
         window.fbAsyncInit = function () {
             FB.init({
@@ -27,8 +24,6 @@
                 xfbml: true,                     // Parse social plugins on this webpage.
                 version: 'v16.0'           // Use this Graph API version for this call.
             });
-
-
             FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
                 statusChangeCallback(response);        // Returns the login status.
             });
@@ -56,8 +51,8 @@
     <script defer="defer">
         (function(){
             let resourceUrl = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js';
-            resourceUrl = 'https://connect.facebook.net/en_US/sdk.js'
-            //json_utils.loadExternalResource(resourceUrl, document.getElementById('fb_jsdk'), 2000);
+            resourceUrl = 'https://connect.facebook.net/en_US/sdk.js';
+            json_utils.loadExternalResource(resourceUrl, document.getElementById('fb_jsdk'), 2000);
         })()
     </script>
 </div>

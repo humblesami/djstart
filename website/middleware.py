@@ -9,11 +9,13 @@ from django.utils.deprecation import MiddlewareMixin
 
 
 def update_site_paths(context):
+    home_url = settings.SITE_URL or ''
     context.update({
         'path_start': settings.URL_PREFIX,
-        'site_url': settings.SITE_URL,
+        'site_url': home_url,
         'static_url': settings.STATIC_URL,
         'media_url': settings.MEDIA_URL,
+        'is_https': home_url.startswith('https://') or ''
     })
     if not context['path_start'].startswith('/'):
         context['path_start'] += '/'

@@ -1,5 +1,5 @@
+from django import shortcuts
 from django.conf import settings
-from django.shortcuts import render
 from django.views.generic import TemplateView
 
 
@@ -13,7 +13,8 @@ def is_staff(request, context):
 
 def index_fun(request):
     context = is_staff(request, {})
-    return render(request, "website/index.html", context)
+    resp2 = shortcuts.render(request, "website/index.html", context)
+    return resp2
     # return HttpResponse('Yes')
     
 
